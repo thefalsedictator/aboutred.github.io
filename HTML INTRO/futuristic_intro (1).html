@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Digital Innovator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-background iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform: translate(-50%, -50%);
+            opacity: 0.3;
+            pointer-events: none;
+            border: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(13, 27, 62, 0.7));
+            z-index: 0;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAC0ALQDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAABAUCAwYBAAcI/8QAQBAAAgEDAwIEBAQDBwMEAwEAAQIDAAQRBRIhMUEGE1FhInGBkRQyobEHI8EVQlJiwdHwM3LhJIKSohYkovGTsv/EABoBAAIDAQEAAAAAAAAAAAAAAAIDAAEEBQb/xAAuEQACAgEDAwMDAwUBAAAAAAAAAQIRIQMSMQRBURMiYTKBkTOh0RRCUrHh8P/aAAwDAQACEQMRAD8A');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -2;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif;
+            background: linear-gradient(135deg, #00f0ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f0ff, #0066ff);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .glitch {
+            font-size: 72px;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif;
+            margin-bottom: 20px;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #00f0ff;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #ff00ea;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-family: 'Arial Black', sans-serif;
+            font-weight: bold;
+            color: #00f0ff;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .description {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 50px;
+            background: linear-gradient(135deg, #00f0ff, #0066ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.8);
+        }
+
+        .section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-family: 'Arial Black', sans-serif;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #00f0ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.1), transparent);
+            transform: scale(0);
+            transition: transform 0.6s;
+        }
+
+        .skill-card:hover::before {
+            transform: scale(1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: #00f0ff;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .skill-title {
+            font-size: 24px;
+            font-family: 'Arial Black', sans-serif;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #00f0ff;
+        }
+
+        .skill-description {
+            opacity: 0.9;
+            line-height: 1.8;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(42px, 9999px, 44px, 0);
+            }
+            20% {
+                clip: rect(12px, 9999px, 59px, 0);
+            }
+            40% {
+                clip: rect(48px, 9999px, 29px, 0);
+            }
+            60% {
+                clip: rect(18px, 9999px, 83px, 0);
+            }
+            80% {
+                clip: rect(36px, 9999px, 15px, 0);
+            }
+            100% {
+                clip: rect(61px, 9999px, 70px, 0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 30px;
+            color: #00f0ff;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .glitch {
+                font-size: 40px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="video-background">
+        <iframe src="https://drive.google.com/file/d/1aM20_rvZp_f4xHH5Fp4c-Unna5ahD6Do/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+    
+    <div class="overlay"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo">TANISHK</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="TANISHK AKA DICTATOR">TANISHK AKA DICTATOR</h1>
+                <p class="subtitle">Web Developer • Nerd • A Boring Guy</p>
+                <p class="description">
+                    Now that I'm free to be myself, WHO AM I?!..... HA-Ha.... "I exist, that is all, and i find it nauseating, rather APATHETIC..." Sorry Pardon My Depravity.
+                </p>
+                <a href="#skills" class="cta-button">Well Ntg Special</a>
+            </div>
+            <div class="scroll-indicator"></div>
+        </section>
+
+        <section class="section" id="skills">
+            <h2 class="section-title">ABOUT ME? I GUESS....</h2>
+            <div class="skills-grid">
+                <div class="skill-card floating">
+                    <div class="skill-icon">👋</div>
+                    <h3 class="skill-title">Denomination</h3>
+                    <p class="skill-description">It's a pleasure to meet you, I'm Tanishk often go by name 'Red', 'Dictator'.</p>
+                </div>
+                <div class="skill-card floating" style="animation-delay: 0.2s">
+                    <div class="skill-icon">🎓</div>
+                    <h3 class="skill-title">Academia</h3>
+                    <p class="skill-description">BSC Hons. C.S.</p>
+                </div>
+                <div class="skill-card floating" style="animation-delay: 0.4s">
+                    <div class="skill-icon">⏳</div>
+                    <h3 class="skill-title">How Old I'm?</h3>
+                    <p class="skill-description">Daddy to many...I guess</p>
+                </div>
+                <div class="skill-card floating" style="animation-delay: 0.6s">
+                    <div class="skill-icon">🎮</div>
+                    <h3 class="skill-title">Hobbies</h3>
+                    <p class="skill-description">Just a nerd, games (too much) and idk anything else.</p>
+                </div>
+                <div class="skill-card floating" style="animation-delay: 0.8s">
+                    <div class="skill-icon">💭</div>
+                    <h3 class="skill-title">Feel Free to Express Your Thoughts</h3>
+                    <p class="skill-description">Share your thoughts, opinions, or just say hi. I'm all ears.</p>
+                </div>
+                <div class="skill-card floating" style="animation-delay: 1s">
+                    <div class="skill-icon">🎂</div>
+                    <h3 class="skill-title">When I Landed on This Planet</h3>
+                    <p class="skill-description">AHA... tragedy planned on that night by my parents and finally after 9 months I landed on like idk you can say "06-10-2004"</p>
+                </div>
+                <div class="skill-card floating" style="animation-delay: 1.2s">
+                    <div class="skill-icon">💕</div>
+                    <h3 class="skill-title">Relationship(s)</h3>
+                    <p class="skill-description">Hmm... well I guess it's better not to disclose anything about it as you know very well 'NAZAR is Real'</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
