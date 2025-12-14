@@ -30,16 +30,17 @@
             z-index: -1;
         }
 
-        .video-background iframe {
+        .video-background video {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 200%;
-            height: 200%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
             transform: translate(-50%, -50%);
             opacity: 0.3;
-            pointer-events: none;
-            border: none;
+            object-fit: cover;
         }
 
         .overlay {
@@ -416,7 +417,9 @@
 <body>
     <div class="background-image"></div>
     <div class="video-background">
-        <iframe src="https://drive.google.com/file/d/1aM20_rvZp_f4xHH5Fp4c-Unna5ahD6Do/preview" allow="autoplay" allowfullscreen></iframe>
+        <video autoplay muted loop playsinline>
+            <source src="https://res.cloudinary.com/dkg2owxgl/video/upload/v1765732275/WhatsApp_Video_2025-12-14_at_21.47.32_lgefni.mp4" type="video/mp4">
+        </video>
     </div>
     
     <div class="overlay"></div>
